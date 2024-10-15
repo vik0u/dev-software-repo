@@ -20,3 +20,5 @@ scipy/cythonize.dat
 scipy/scipy/__pycache__/
 scipy/scipy/version.py
 scipy/tools/__pycache__
+scipy/scipy/odr/__pycache__
+scipy/**/__pycache__/
