@@ -26,7 +26,7 @@ pip install Cython==0.29.37
 
 # 2. Клонирование репозитория
 echo "Клонирование репозитория..."
-https://github.com/vik0u/dev-software-repo.git soft
+git clone https://github.com/vik0u/dev-software-repo.git soft
 cd soft
 
 # 3. Установка CUDA
