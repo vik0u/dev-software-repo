@@ -13,6 +13,7 @@ CUDA 12.6, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other ins
 - `SciPy==1.11.4`
 - `FilterPy==1.4.5`
 - `OpenCV=4.10.0`
+- `OpenBLAS 0.3.28.dev`
 
 # usage:
 1. Make sure you have Git installed:
