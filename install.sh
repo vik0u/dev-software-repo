@@ -62,7 +62,7 @@ echo "Установка SciPy..."
 git clone https://github.com/scipy/scipy.git -b v1.11.4 && git submodule update --init
 sudo pip3 install pybind11 pythran --break-system-packages
 cp scipy_contrib/site.cfg scipy/
-cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/
+cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/flapack_sym_herm.pyf.src
 cd scipy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
 
 # 7. Установка FilterPy
