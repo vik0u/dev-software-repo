@@ -85,6 +85,6 @@ cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local 
 echo "Установка дополнительных библиотек..."
 pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart --break-system-packages
 
-pip install git+https://github.com/SiggiGue/pyfilterbank.git
+pip install git+https://github.com/SiggiGue/pyfilterbank.git --break-system-packages
 
 echo "Установка завершена!"
