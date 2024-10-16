@@ -5,7 +5,7 @@ CUDA 12.6, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other ins
 
 **This installer is intended for use on a clean Ubuntu 24.04 system. Please ensure that you do NOT have these packages already installed, as this may cause dependency issues.**
 
-# in this installer
+# during installation, the following versions of libraries and tools will be installed:
 - `Cython==0.29.37`
 - `CUDA==12.6.2`
 - `cuDNN==9.5.0`
@@ -15,7 +15,7 @@ CUDA 12.6, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other ins
 - `OpenCV=4.10.0`
 - `OpenBLAS 0.3.28.dev`
 
-# during installation, the following versions of libraries and tools will be installed::
+# usage:
 1. Make sure you have Git installed:
    ```bash
    sudo apt update && sudo apt install git
