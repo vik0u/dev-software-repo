@@ -22,7 +22,7 @@ libjpeg8-dev libfaac-dev libtheora-dev libopencore-amrnb-dev \
 libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev
 
 # Установка Cython
-pip install Cython==0.29.37
+pip install Cython==0.29.37 --break-system-packages
 
 # 2. Установка CUDA
 echo "Установка CUDA..."
@@ -44,34 +44,46 @@ sudo apt-get -y install cudnn
 
 # 4. Установка OpenBLAS
 echo "Установка OpenBLAS..."
+git clone https://github.com/OpenMathLib/OpenBLAS.git 
 cd OpenBLAS && make -j 12 && sudo make install PREFIX=/usr/local/opt/openblas && cd ..
 
 # 5. Установка NumPy
 echo "Установка NumPy..."
+git clone https://github.com/numpy/numpy.git -b v1.26.5 
 cd numpy && git submodule update --init && cd ..
+
+# Копирование файла site.cfg из папки numpy_contrib в папку numpy
+cp numpy_contrib/site.cfg numpy/
+
 cd numpy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
 
 # 6. Установка SciPy
 echo "Установка SciPy..."
+git clone https://github.com/scipy/scipy.git -b v1.11.4 && git submodule update --init
 sudo pip3 install pybind11 pythran --break-system-packages
+cp scipy_contrib/site.cfg scipy/
+cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/
 cd scipy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
 
 # 7. Установка FilterPy
 echo "Установка FilterPy..."
+git clone https://github.com/rlabbe/filterpy.git -b 1.4.5
 cd filterpy && sudo python3 setup.py install && cd ..
 
 # 8. Установка FFmpeg
 echo "Установка FFmpeg..."
+git clone https://github.com/FFmpeg/nv-codec-headers.git && git clone https://github.com/FFmpeg/FFmpeg.git
 cd nv-codec-headers && make && sudo make install && sudo ldconfig
 cd FFmpeg && ./configure --prefix="$HOME/soft/FFmpeg" --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree --enable-cuda-nvcc --enable-cuvid --enable-nvenc && make -j 12 && sudo make install && cd ..
 
 # 9. Установка OpenCV
 echo "Установка OpenCV..."
+git clone https://github.com/opencv/opencv.git -b 4.10.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.10.0
 cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && make -j 12 && sudo make install && cd ../..
 
 # 10. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
-pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
+pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart --break-system-packages
 
 pip install git+https://github.com/SiggiGue/pyfilterbank.git
 
