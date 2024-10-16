@@ -1,7 +1,7 @@
 # dev-software-repo
 dev soft for ubuntu 24.04
 
-CUDA 12.6, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other installation  on a clean Ubuntu 24.04
+CUDA, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other installation  on a clean Ubuntu 24.04
 
 **This installer is intended for use on a clean Ubuntu 24.04 system. Please ensure that you do NOT have these packages already installed, as this may cause dependency issues.**
 
