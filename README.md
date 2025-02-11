@@ -1,9 +1,7 @@
 # dev-software-repo
 dev soft for ubuntu 24.04
 
-CUDA, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other installation on a clean Ubuntu 24.04 (creating venv for computer vision)
-
-**This installer is intended for use on a clean Ubuntu 24.04 system. Please ensure that you do NOT have these packages already installed, as this may cause dependency issues.**
+CUDA, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other installation on a clean Ubuntu 24.04 (creating venv for work with computer vision)
 
 # during installation, the following versions of libraries and tools will be installed:
 - `Cython==0.29.37`
