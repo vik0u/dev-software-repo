@@ -25,7 +25,7 @@ if [ -z "$VIRTUAL_ENV" ]; then
   exit 1
 fi
 
-# 1. Установка базовых зависимостей
+# 2. Установка базовых зависимостей
 echo "Обновление системы и установка базовых зависимостей..."
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y apt-utils autoconf automake build-essential cmake \
@@ -44,7 +44,7 @@ libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev
 # Установка Cython
 pip install Cython==0.29.37
 
-# 2. Установка CUDA
+# 3. Установка CUDA
 echo "Установка CUDA..."
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
 sudo mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
@@ -54,7 +54,7 @@ sudo cp /var/cuda-repo-ubuntu2404-12-6-local/cuda-*-keyring.gpg /usr/share/keyri
 sudo apt-get update
 sudo apt-get -y install cuda-toolkit-12-6
 
-# 3. Установка cuDNN 
+# 4. Установка cuDNN 
 echo "Установка cuDNN..."
 wget https://developer.download.nvidia.com/compute/cudnn/9.5.0/local_installers/cudnn-local-repo-ubuntu2404-9.5.0_1.0-1_amd64.deb
 sudo dpkg -i cudnn-local-repo-ubuntu2404-9.5.0_1.0-1_amd64.deb
@@ -62,12 +62,12 @@ sudo cp /var/cudnn-local-repo-ubuntu2404-9.5.0/cudnn-*-keyring.gpg /usr/share/ke
 sudo apt-get update
 sudo apt-get -y install cudnn
 
-# 4. Установка OpenBLAS
+# 5. Установка OpenBLAS
 echo "Установка OpenBLAS..."
 git clone https://github.com/OpenMathLib/OpenBLAS.git 
 cd OpenBLAS && make -j 12 && sudo make install PREFIX=/usr/local/opt/openblas && cd ..
 
-# 5. Установка NumPy
+# 6. Установка NumPy
 echo "Установка NumPy..."
 git clone https://github.com/numpy/numpy.git -b v1.26.5 
 cd numpy && git submodule update --init && cd ..
@@ -77,7 +77,7 @@ cp numpy_contrib/site.cfg numpy/
 
 cd numpy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
 
-# 6. Установка SciPy
+# 7. Установка SciPy
 echo "Установка SciPy..."
 git clone https://github.com/scipy/scipy.git -b v1.11.4 && git submodule update --init
 sudo pip3 install pybind11 pythran
@@ -85,23 +85,23 @@ cp scipy_contrib/site.cfg scipy/
 cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/flapack_sym_herm.pyf.src
 cd scipy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
 
-# 7. Установка FilterPy
+# 8. Установка FilterPy
 echo "Установка FilterPy..."
 git clone https://github.com/rlabbe/filterpy.git -b 1.4.5
 cd filterpy && sudo python3 setup.py install && cd ..
 
-# 8. Установка FFmpeg
+# 9. Установка FFmpeg
 echo "Установка FFmpeg..."
 git clone https://github.com/FFmpeg/nv-codec-headers.git && git clone https://github.com/FFmpeg/FFmpeg.git
 cd nv-codec-headers && make && sudo make install && sudo ldconfig
 cd FFmpeg && ./configure --prefix="$HOME/soft/FFmpeg" --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree --enable-cuda-nvcc --enable-cuvid --enable-nvenc && make -j 12 && sudo make install && cd ..
 
-# 9. Установка OpenCV
+# 10. Установка OpenCV
 echo "Установка OpenCV..."
 git clone https://github.com/opencv/opencv.git -b 4.10.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.10.0
 cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && make -j 12 && sudo make install && cd ../..
 
-# 10. Установка дополнительных библиотек (опционально)
+# 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
 pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
 
