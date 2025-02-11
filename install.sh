@@ -21,8 +21,13 @@ qtbase5-dev qt5-qmake x264 v4l-utils libprotobuf-dev protobuf-compiler \
 libjpeg8-dev libfaac-dev libtheora-dev libopencore-amrnb-dev \
 libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev
 
+#создание и запуск виртуального окружения soft под CV???
+sudo apt-get install -y python3-venv
+python -m venv soft
+source test/bin/activate soft
+
 # Установка Cython
-pip install Cython==0.29.37 --break-system-packages
+pip install Cython==0.29.37
 
 # 2. Установка CUDA
 echo "Установка CUDA..."
@@ -60,7 +65,7 @@ cd numpy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd 
 # 6. Установка SciPy
 echo "Установка SciPy..."
 git clone https://github.com/scipy/scipy.git -b v1.11.4 && git submodule update --init
-sudo pip3 install pybind11 pythran --break-system-packages
+sudo pip3 install pybind11 pythran
 cp scipy_contrib/site.cfg scipy/
 cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/flapack_sym_herm.pyf.src
 cd scipy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
@@ -83,8 +88,8 @@ cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local 
 
 # 10. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
-pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart --break-system-packages
+pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
 
-pip install git+https://github.com/SiggiGue/pyfilterbank.git --break-system-packages
+pip install git+https://github.com/SiggiGue/pyfilterbank.git
 
 echo "Установка завершена!"
