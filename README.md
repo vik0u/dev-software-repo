@@ -21,9 +21,9 @@ CUDA, cuDNN, FFmpeg, FilterPy, NumPy, OpenBLAS, OpenCV, SciPy and other installa
    sudo apt update && sudo apt install git
    ```
    
-2. Clone the repository into the `soft` folder:
+2. Clone the repository into the `software` folder:
    ```bash
-   git clone https://github.com/vik0u/dev-software-repo.git soft
+   git clone https://github.com/vik0u/dev-software-repo.git software
    ```
 3. Navigate to the cloned repository folder and run the installation script:
    ```bash
