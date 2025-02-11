@@ -9,7 +9,9 @@ fi
 # Имя виртуального окружения
 VENV_NAME="soft"
 
+
 # 1. Создание виртуального окружения
+sudo apt-get install -y python3-venv
 echo "Создание виртуального окружения ${VENV_NAME}..."
 python3 -m venv "$HOME/$VENV_NAME"
 
