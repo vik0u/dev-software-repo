@@ -6,6 +6,23 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
+# Имя виртуального окружения
+VENV_NAME="soft"
+
+# 1. Создание виртуального окружения
+echo "Создание виртуального окружения ${VENV_NAME}..."
+python3 -m venv "$HOME/$VENV_NAME"
+
+# Активация виртуального окружения
+echo "Активация виртуального окружения ${VENV_NAME}..."
+source "$HOME/$VENV_NAME/bin/activate"
+
+# Проверка, что окружение активировано (необязательно)
+if [ -z "$VIRTUAL_ENV" ]; then
+  echo "Ошибка: Виртуальное окружение не было активировано."
+  exit 1
+fi
+
 # 1. Установка базовых зависимостей
 echo "Обновление системы и установка базовых зависимостей..."
 sudo apt update && sudo apt upgrade -y
@@ -21,10 +38,6 @@ qtbase5-dev qt5-qmake x264 v4l-utils libprotobuf-dev protobuf-compiler \
 libjpeg8-dev libfaac-dev libtheora-dev libopencore-amrnb-dev \
 libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev
 
-#создание и запуск виртуального окружения soft под CV???
-sudo apt-get install -y python3-venv
-python -m venv soft
-source test/bin/activate soft
 
 # Установка Cython
 pip install Cython==0.29.37
@@ -91,5 +104,8 @@ echo "Установка дополнительных библиотек..."
 pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
 
 pip install git+https://github.com/SiggiGue/pyfilterbank.git
+
+echo "Деактивация виртуального окружения..."
+deactivate
 
 echo "Установка завершена!"
