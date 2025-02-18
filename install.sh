@@ -101,7 +101,20 @@ echo "Установка OpenCV..."
 git clone https://github.com/opencv/opencv.git -b 4.10.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.10.0
 cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && make -j 12 && sudo make install && cd ../..
 
-sudo cp /usr/local/lib/python3.12/dist-packages/opencv_python-4.10* $HOME/$VENV_NAME
+OPENCV_PATH=$(python3 -c "import cv2; print(cv2.__path__[0])")
+
+echo "Путь к OpenCV: ${OPENCV_PATH}"
+
+# Определение пути к пакетам в виртуальном окружении
+VENV_SITE_PACKAGES="$HOME/$VENV_NAME/lib/python3.$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')/site-packages"
+
+echo "Путь к site-packages в виртуальном окружении: ${VENV_SITE_PACKAGES}"
+
+# Копирование файлов OpenCV в виртуальное окружение
+echo "Копирование файлов OpenCV в виртуальное окружение..."
+sudo cp -r "${OPENCV_PATH}/cv2.so" "${VENV_SITE_PACKAGES}"
+sudo cp -r "${OPENCV_PATH}/__init__.py" "${VENV_SITE_PACKAGES}"
+
 
 # 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
