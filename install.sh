@@ -116,7 +116,7 @@ sudo cp -r "${OPENCV_PATH}" "${VENV_SITE_PACKAGES}"
 
 # 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
-pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
+pip install werkzeug uvicorn fastapi pydub matplotlib sounddevice librosa deskew python-multipart #langchain, llama-cpp-python
 
 pip install git+https://github.com/SiggiGue/pyfilterbank.git
 
