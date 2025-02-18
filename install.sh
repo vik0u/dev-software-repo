@@ -112,9 +112,7 @@ echo "Путь к site-packages в виртуальном окружении: ${
 
 # Копирование файлов OpenCV в виртуальное окружение
 echo "Копирование файлов OpenCV в виртуальное окружение..."
-sudo cp -r "${OPENCV_PATH}/cv2.so" "${VENV_SITE_PACKAGES}"
-sudo cp -r "${OPENCV_PATH}/__init__.py" "${VENV_SITE_PACKAGES}"
-
+sudo cp -r "${OPENCV_PATH}" "${VENV_SITE_PACKAGES}"
 
 # 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
