@@ -101,6 +101,8 @@ echo "Установка OpenCV..."
 git clone https://github.com/opencv/opencv.git -b 4.10.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.10.0
 cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && make -j 12 && sudo make install && cd ../..
 
+#sudo cp 
+
 # 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
 pip install langchain werkzeug uvicorn fastapi llama-cpp-python pydub matplotlib sounddevice librosa deskew python-multipart
