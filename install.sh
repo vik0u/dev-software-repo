@@ -38,7 +38,7 @@ libv4l-dev libxvidcore-dev libgtk-3-dev libatlas-base-dev gfortran python3 \
 python3-dev python3-pip libgtk2.0-dev libtbb-dev qt5-doc qtcreator \
 qtbase5-dev qt5-qmake x264 v4l-utils libprotobuf-dev protobuf-compiler \
 libjpeg8-dev libfaac-dev libtheora-dev libopencore-amrnb-dev \
-libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev
+libopencore-amrwb-dev gcc screen libomp-dev ssh curl portaudio19-dev nvidia-cuda-toolkit
 
 
 # Установка Cython
@@ -69,21 +69,15 @@ cd OpenBLAS && make -j 12 && sudo make install PREFIX=/usr/local/opt/openblas &&
 
 # 6. Установка NumPy
 echo "Установка NumPy..."
-git clone https://github.com/numpy/numpy.git -b v1.26.5 
-cd numpy && git submodule update --init && cd ..
-
-# Копирование файла site.cfg из папки numpy_contrib в папку numpy
-cp numpy_contrib/site.cfg numpy/
-
-cd numpy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
+pip install numpy==1.26.4
 
 # 7. Установка SciPy
 echo "Установка SciPy..."
-git clone https://github.com/scipy/scipy.git -b v1.11.4 && git submodule update --init
-sudo pip3 install pybind11 pythran
-cp scipy_contrib/site.cfg scipy/
-cp scipy_contrib/flapack_sym_herm.pyf.src scipy/linalg/flapack_sym_herm.pyf.src
-cd scipy && sudo python3 setup.py build -j 12 install --prefix /usr/local && cd ..
+pip install scipy
+#Установка NumPy
+pip uninstall numpy && pip install numpy==1.26.4
+(потому что этот пидор опять не ту версию подсасывает)
+
 
 # 8. Установка FilterPy
 echo "Установка FilterPy..."
@@ -92,35 +86,38 @@ cd filterpy && sudo python3 setup.py install && cd ..
 
 # 9. Установка FFmpeg
 echo "Установка FFmpeg..."
-git clone https://github.com/FFmpeg/nv-codec-headers.git && git clone https://github.com/FFmpeg/FFmpeg.git
-cd nv-codec-headers && make && sudo make install && sudo ldconfig
-cd FFmpeg && ./configure --prefix="$HOME/soft/FFmpeg" --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nonfree --enable-cuda-nvcc --enable-cuvid --enable-nvenc && make -j 12 && sudo make install && cd ..
+git clone https://github.com/FFmpeg/FFmpeg.git -b n6.1.2 && git clone https://github.com/FFmpeg/nv-codec-headers.git -b sdk/12.2 
+cd nv-codec-headers && make && sudo make install && sudo ldconfig && cd ..
+cd FFmpeg && export CFLAGS="-fPIC" && export CXXFLAGS="-fPIC" && ./configure --prefix=/usr/local --enable-shared --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264 --enable-pic --enable-libx265 --enable-nonfree --enable-cuda-nvcc --enable-cuvid --enable-nvenc && make -j 12 && sudo make install && cd ..
+
+
 
 # 10. Установка OpenCV
 echo "Установка OpenCV..."
-git clone https://github.com/opencv/opencv.git -b 4.10.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.10.0
+git clone https://github.com/opencv/opencv.git -b 4.11.0 && git clone  https://github.com/opencv/opencv_contrib.git -b 4.11.0
 cd opencv && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && make -j 12 && sudo make install && cd ../..
 
-OPENCV_PATH=$(python3 -c "import cv2; print(cv2.__path__[0])")
-
+# смотрим путь куда встало опнсв
+OPENCV_PATH=$(python3 -c "import cv2; print(cv2.path[0])")
 echo "Путь к OpenCV: ${OPENCV_PATH}"
+sudo cp -r "${OPENCV_PATH}" "/$VENV_NAME/lib/python3.12/site-packages/cv2"
+#sudo cp -r /usr/local/lib/python3.12/dist-packages/cv2 /home/liz/PycharmProjects/SHUM/soft/lib/python3.12/site-packages/cv2
 
-# Определение пути к пакетам в виртуальном окружении
-VENV_SITE_PACKAGES="$HOME/$VENV_NAME/lib/python3.$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')/site-packages"
+# смотрим путь куда встало
+which ffmpeg
+sudo cp -r /usr/local/bin/ffmpeg /$VENV_NAME/bin/
 
-echo "Путь к site-packages в виртуальном окружении: ${VENV_SITE_PACKAGES}"
+sudo cp -r /usr/local/lib/libavdevice* /$VENV_NAME/lib/
 
-# Копирование файлов OpenCV в виртуальное окружение
-echo "Копирование файлов OpenCV в виртуальное окружение..."
-sudo cp -r "${OPENCV_PATH}" "${VENV_SITE_PACKAGES}"
+
+
 
 # 11. Установка дополнительных библиотек (опционально)
 echo "Установка дополнительных библиотек..."
-pip install werkzeug uvicorn fastapi pydub matplotlib sounddevice librosa deskew python-multipart #langchain, llama-cpp-python
+pip install werkzeug uvicorn fastapi pydub matplotlib sounddevice librosa deskew python-multipart PyYAML ultralytics #langchain, llama-cpp-python
 
 pip install git+https://github.com/SiggiGue/pyfilterbank.git
 
-echo "Деактивация виртуального окружения..."
-deactivate
+pip uninstall opencv-python
 
 echo "Установка завершена!"
